@@ -1,35 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>小学徒的网站</title>
+    <title>百年好合 | 永结同心</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 微软雅黑, Arial;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-            line-height: 1.6;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #fff9f9;
+            overflow-x: hidden;
         }
-        h1 {
-            color: #333;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
         }
-        p {
-            color: #666;
-            margin: 15px 0;
+
+        .header {
+            text-align: center;
+            padding: 50px 0;
+            animation: fadeIn 2s;
         }
-        .highlight {
+
+        .title {
+            font-size: 3.5em;
             color: #e74c3c;
-            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .couple-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            margin: 30px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .message-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 30px 0;
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #666;
+            animation: slideUp 1.5s ease-out;
+        }
+
+        .heart {
+            color: #ff4d4d;
+            font-size: 1.5em;
+            animation: beat 1s infinite;
+        }
+
+        .petals {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5em;
+            }
+            .couple-img {
+                width: 200px;
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>📖 同学你好！</h1>
-    <p>可以借给我你的笔记本用一下嘛？</p>
-    <p class="highlight">谢谢你⭐</p>
-    <p>你是世界上最善良的人！</p>
+    <div class="petals"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="title">祝语文老师 & 先生永浴爱河</h1>
+            <img src="https://github.com/XiaoXueTu555/XiaoXueTu555.github.io/blob/main/couple-img.jpg" alt="新人照片" class="couple-img" id="couplePhoto">
+        </header>
+
+        <div class="message-box">
+            <p>🌺 两情相悦的最高境界是相对两无厌</p>
+            <p>📖 从讲台到红毯，从师生到挚友</p>
+            <p>🎉 在这个特别的日子里</p>
+            <p>💐 愿你们：</p>
+            <p>❤️ 冷暖有相知 | 喜乐有分享</p>
+            <p>🌈 同量天地宽 | 共度日月长</p>
+            <div class="date">2025年-5月21日</div>
+        </div>
+    </div>
+
+    <script>
+        // 添加花瓣飘落动画
+        function createPetals() {
+            const petalsContainer = document.querySelector('.petals');
+            for (let i = 0; i < 30; i++) {
+                const petal = document.createElement('div');
+                petal.innerHTML = '🌸';
+                petal.style.position = 'absolute';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animation = `fall ${8 + Math.random() * 5}s linear infinite`;
+                petalsContainer.appendChild(petal);
+            }
+        }
+
+        // 图片点击特效
+        document.getElementById('couplePhoto').addEventListener('click', function() {
+            this.style.transform = 'scale(1.1)';
+            setTimeout(() => this.style.transform = 'scale(1)', 500);
+        });
+
+        // 初始化
+        window.onload = createPetals;
+    </script>
 </body>
 </html>
