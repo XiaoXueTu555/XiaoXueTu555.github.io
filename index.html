@@ -14,12 +14,15 @@
             font-family: 'Microsoft YaHei', sans-serif;
             background: #fff9f9;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 30px;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
@@ -29,41 +32,115 @@
         }
 
         .title {
-            font-size: 3.5em;
-            color: #e74c3c;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: clamp(2.5em, 6vw, 3.5em);
             margin-bottom: 20px;
             background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.3;
         }
 
-        .couple-img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            margin: 30px 0;
-            animation: float 3s ease-in-out infinite;
+        /* 新轮播样式 */
+        .carousel {
+            width: min(90%, 800px);
+            height: 400px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
+
+        .carousel-list {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+            .carousel-item.active {
+                opacity: 1;
+            }
+
+            .carousel-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            color: #ff6b6b;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+            .carousel-btn:hover {
+                background: rgba(255,255,255,1);
+            }
+
+        .left-btn {
+            left: 20px;
+        }
+
+        .right-btn {
+            right: 20px;
+        }
+
+        .indicator-list {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator-item {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .indicator-item.active {
+                background: #ff6b6b;
+                transform: scale(1.2);
+            }
 
         .message-box {
-            background: white;
+            background: rgba(255,255,255,0.95);
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin: 30px 0;
             line-height: 1.8;
-            font-size: 1.1em;
+            font-size: clamp(1em, 4vw, 1.1em);
             color: #666;
+            backdrop-filter: blur(5px);
             animation: slideUp 1.5s ease-out;
         }
 
         .heart {
             color: #ff4d4d;
-            font-size: 1.5em;
             animation: beat 1s infinite;
         }
 
@@ -72,42 +149,99 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+            from {
+                opacity: 0;
+            }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-20vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5em;
+            .carousel {
+                height: 300px;
             }
-            .couple-img {
-                width: 200px;
-                height: 200px;
+
+            .carousel-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+
+            .message-box {
+                padding: 20px;
+            }
+
+            .title {
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
     <div class="petals"></div>
-    
+
     <div class="container">
         <header class="header">
             <h1 class="title">祝语文老师 & 先生永浴爱河</h1>
-            <img src="https://github.com/XiaoXueTu555/XiaoXueTu555.github.io/blob/main/couple-img.jpg" alt="新人照片" class="couple-img" id="couplePhoto">
+            <div class="carousel">
+                <ul class="carousel-list">
+                    <li class="carousel-item active">
+                        <img src="https://raw.githubusercontent.com/XiaoXueTu555/XiaoXueTu555.github.io/main/couple-img1.jpg" alt="新婚合照" loading="lazy">
+                    </li>
+                    <li class="carousel-item">
+                        <img src="https://raw.githubusercontent.com/XiaoXueTu555/XiaoXueTu555.github.io/main/couple-img2.jpg" alt="新婚合照" loading="lazy">
+                    </li>
+                    <li class="carousel-item">
+                        <img src="https://raw.githubusercontent.com/XiaoXueTu555/XiaoXueTu555.github.io/main/couple-img3.jpg" alt="新婚合照" loading="lazy">
+                    </li>
+                    <li class="carousel-item">
+                        <img src="https://raw.githubusercontent.com/XiaoXueTu555/XiaoXueTu555.github.io/main/couple-img4.jpg" alt="新婚合照" loading="lazy">
+                    </li>
+                </ul>
+                <button class="carousel-btn left-btn">‹</button>
+                <button class="carousel-btn right-btn">›</button>
+                <ul class="indicator-list"></ul>
+            </div>
         </header>
 
         <div class="message-box">
@@ -117,32 +251,104 @@
             <p>💐 愿你们：</p>
             <p>❤️ 冷暖有相知 | 喜乐有分享</p>
             <p>🌈 同量天地宽 | 共度日月长</p>
-            <div class="date">2025年-5月21日</div>
+            <div class="date">2025年5月21日</div>
         </div>
     </div>
 
     <script>
-        // 添加花瓣飘落动画
+        // 花瓣动画
         function createPetals() {
             const petalsContainer = document.querySelector('.petals');
-            for (let i = 0; i < 30; i++) {
+            Array.from({ length: 30 }).forEach(() => {
                 const petal = document.createElement('div');
-                petal.innerHTML = '🌸';
-                petal.style.position = 'absolute';
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animation = `fall ${8 + Math.random() * 5}s linear infinite`;
+                petal.innerHTML = Math.random() > 0.5 ? '🌸' : '🍁';
+                petal.style.cssText = `
+                        position: absolute;
+                        left: ${Math.random() * 100}vw;
+                        font-size: ${20 + Math.random() * 15}px;
+                        animation: fall ${8 + Math.random() * 5}s linear infinite;
+                        opacity: ${0.5 + Math.random() * 0.5};
+                    `;
                 petalsContainer.appendChild(petal);
-            }
+            });
         }
 
-        // 图片点击特效
-        document.getElementById('couplePhoto').addEventListener('click', function() {
-            this.style.transform = 'scale(1.1)';
-            setTimeout(() => this.style.transform = 'scale(1)', 500);
+        // 轮播功能
+        const carousel = document.querySelector('.carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        const indicatorList = document.querySelector('.indicator-list');
+        const leftBtn = document.querySelector('.left-btn');
+        const rightBtn = document.querySelector('.right-btn');
+        let currentIndex = 0;
+        let autoScroll = true;
+        let intervalId;
+
+        // 初始化指示器
+        items.forEach((_, index) => {
+            const indicator = document.createElement('li');
+            indicator.classList.add('indicator-item');
+            if (index === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToSlide(index));
+            indicatorList.appendChild(indicator);
         });
 
+        // 切换幻灯片
+        function goToSlide(index) {
+            currentIndex = (index + items.length) % items.length;
+            items.forEach(item => item.classList.remove('active'));
+            items[currentIndex].classList.add('active');
+
+            document.querySelectorAll('.indicator-item').forEach((item, i) => {
+                item.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // 自动播放
+        function autoPlay() {
+            intervalId = setInterval(() => {
+                if (autoScroll) goToSlide(currentIndex + 1);
+            }, 5000);
+        }
+
+        // 按钮控制
+        leftBtn.addEventListener('click', () => {
+            goToSlide(currentIndex - 1);
+            resetAutoPlay();
+        });
+
+        rightBtn.addEventListener('click', () => {
+            goToSlide(currentIndex + 1);
+            resetAutoPlay();
+        });
+
+        // 悬停控制
+        carousel.addEventListener('mouseenter', () => {
+            autoScroll = false;
+            leftBtn.style.display = 'block';
+            rightBtn.style.display = 'block';
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            autoScroll = true;
+            leftBtn.style.display = 'none';
+            rightBtn.style.display = 'none';
+        });
+
+        // 窗口失焦暂停
+        window.addEventListener('blur', () => clearInterval(intervalId));
+        window.addEventListener('focus', autoPlay);
+
+        function resetAutoPlay() {
+            clearInterval(intervalId);
+            autoPlay();
+        }
+
         // 初始化
-        window.onload = createPetals;
+        window.addEventListener('load', () => {
+            createPetals();
+            autoPlay();
+            localStorage.setItem('lastVisit', new Date().toLocaleString());
+        });
     </script>
 </body>
 </html>
