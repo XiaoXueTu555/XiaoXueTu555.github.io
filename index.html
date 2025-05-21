@@ -42,7 +42,7 @@
 
         .carousel {
             width: min(90%, 800px);
-            height: 450px;
+            height: 500px;
             margin: 30px auto;
             position: relative;
             overflow: hidden;
@@ -149,10 +149,20 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        @media (max-width: 768px) {
-            .carousel { height: 300px; }
-            .carousel-btn { width: 35px; height: 35px; font-size: 20px; }
-            .message-box { padding: 20px; }
+        @media only screen and (max-width: 393px) {
+            .carousel {
+                height: 500;
+            }
+
+            .carousel-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+
+            .message-box {
+                padding: 20px;
+            }
         }
     </style>
 </head>
